@@ -43,7 +43,15 @@ type ActionId =
   | "revoke_override"
   | null;
 
-function Field({ label, value, hint }: { label: string; value: React.ReactNode; hint?: string }) {
+function Field({
+  label,
+  value,
+  hint,
+}: {
+  label: string;
+  value: React.ReactNode;
+  hint?: string | undefined;
+}) {
   return (
     <div className="rounded-xl border border-border bg-surface-muted/40 p-3">
       <p className="label-caps">{label}</p>
