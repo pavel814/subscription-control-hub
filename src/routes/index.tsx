@@ -262,7 +262,8 @@ function SaasAdminPage() {
                 <div className="text-sm">{planName(org.subscription.plan)}</div>
                 <div className="flex flex-col items-start gap-1.5">
                   <SubStatusPill status={org.subscription.status} />
-                  <div className="hidden lg:block">
+                  <div className="hidden items-center gap-1.5 lg:flex">
+                    <span className="label-caps">Орг.</span>
                     <OrgStatusPill status={org.status} />
                   </div>
                 </div>
