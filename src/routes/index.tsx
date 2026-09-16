@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
 import {
   AlarmClock,
   Bell,
@@ -42,6 +43,8 @@ export const Route = createFileRoute("/")({
         content:
           "Организация, подписка и доступ как независимые слои: продление доступа, grace-период, льготы и аудит.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (
@@ -192,7 +195,7 @@ function SaasAdminPage() {
               className="pl-9"
             />
           </div>
-           <Button size="icon" variant="ghost" aria-label="Уведомления"><Bell /></Button>
+           <Button size="icon" variant="ghost" aria-label="Уведомления" onClick={() => toast.info("Новых уведомлений нет")}><Bell /></Button>
            <div className="hidden items-center gap-2 rounded-full border border-border px-3 py-1.5 text-sm sm:flex">
             <span className="grid size-6 place-items-center rounded-full bg-primary/15 text-xs text-primary">
               П
@@ -208,7 +211,18 @@ function SaasAdminPage() {
                <h1 className="mt-1 truncate text-2xl font-semibold sm:text-3xl">SaaS Admin</h1>
                <p className="mt-1 text-sm text-muted-foreground">Управление организациями, оплатой и доступом</p>
              </div>
-             <Button variant="outline" size="icon" aria-label="Настройки списка"><SlidersHorizontal /></Button>
+             <Button
+               variant="outline"
+               size="icon"
+               aria-label="Сбросить поиск и фильтры"
+               onClick={() => {
+                 setQuery("");
+                 setFilter("all");
+                 toast.success("Фильтры сброшены");
+               }}
+             >
+               <SlidersHorizontal />
+             </Button>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -328,9 +342,9 @@ function SaasAdminPage() {
 
        <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-sidebar-border bg-sidebar px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 lg:hidden" aria-label="Основная навигация">
          {[NAV[0], NAV[1], NAV[3]].map((item) => item && (
-           <Button key={item.label} variant="ghost" className="h-12 flex-col gap-1 text-[10px] text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"><item.icon className="size-4" />{item.label}</Button>
+           <span key={item.label} className="flex h-12 flex-col items-center justify-center gap-1 text-[10px] text-sidebar-foreground/65"><item.icon className="size-4" />{item.label}</span>
          ))}
-         <Button variant="ghost" className="h-12 flex-col gap-1 bg-sidebar-accent text-[10px] text-sidebar-accent-foreground"><CreditCard className="size-4 text-primary" />SaaS Admin</Button>
+         <span className="flex h-12 flex-col items-center justify-center gap-1 rounded-md bg-sidebar-accent text-[10px] text-sidebar-accent-foreground"><CreditCard className="size-4 text-primary" />SaaS Admin</span>
        </nav>
 
       <OrgDetail
