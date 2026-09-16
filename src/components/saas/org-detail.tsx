@@ -229,7 +229,7 @@ export function OrgDetail({
               </TabsContent>
 
               <TabsContent value="history" className="mt-4">
-                <AuditTimeline entries={auditFor(org.id)} />
+                <AuditTimeline entries={auditFor(org.id)} organizations={[org]} />
               </TabsContent>
             </Tabs>
           </div>

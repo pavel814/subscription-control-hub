@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import {
   AlarmClock,
+  Bell,
   Building2,
   CalendarClock,
   ChevronRight,
@@ -10,7 +11,7 @@ import {
   Search,
   Settings,
   ShieldCheck,
-  Sparkles,
+  SlidersHorizontal,
   Users,
   Wallet,
 } from "lucide-react";
@@ -51,7 +52,7 @@ export const Route = createFileRoute("/")({
 });
 
 const NAV = [
-  { label: "Сегодня", icon: Sparkles },
+  { label: "Сегодня", icon: CalendarClock },
   { label: "Клиенты", icon: Users },
   { label: "Услуги", icon: Building2 },
   { label: "Финансы", icon: Wallet },
@@ -87,12 +88,12 @@ function Metric({
     danger: "text-destructive bg-destructive/12",
   }[tone];
   return (
-    <div className="panel flex items-center gap-3 p-4">
-      <span className={cn("grid size-10 place-items-center rounded-xl", toneCls)}>
+    <div className="panel flex items-center gap-3 p-3.5">
+      <span className={cn("grid size-9 shrink-0 place-items-center rounded-md", toneCls)}>
         <Icon className="size-5" />
       </span>
       <span>
-        <span className="block text-xl font-semibold">{value}</span>
+        <span className="block text-lg font-semibold">{value}</span>
         <span className="block text-xs text-muted-foreground">{label}</span>
       </span>
     </div>
@@ -146,10 +147,10 @@ function SaasAdminPage() {
   }, [organizations]);
 
   return (
-    <div className="flex min-h-screen">
-      <aside className="hidden w-60 shrink-0 flex-col border-r border-sidebar-border bg-sidebar p-4 lg:flex">
-        <div className="flex items-center gap-2.5 px-1 pb-6">
-          <span className="grid size-9 place-items-center rounded-xl bg-primary text-primary-foreground">
+    <div className="min-h-screen bg-background lg:flex">
+      <aside className="hidden w-56 shrink-0 flex-col border-r border-sidebar-border bg-sidebar p-4 lg:flex">
+        <div className="flex items-center gap-2.5 border-b border-sidebar-border px-1 pb-4">
+          <span className="grid size-9 place-items-center rounded-md bg-primary text-primary-foreground">
             <ShieldCheck className="size-5" />
           </span>
           <span>
@@ -161,18 +162,18 @@ function SaasAdminPage() {
           {NAV.map((item) => (
             <span
               key={item.label}
-              className="flex cursor-default items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/60"
+               className="flex cursor-default items-center gap-2.5 rounded-md px-3 py-2 text-sm text-sidebar-foreground/60"
             >
               <item.icon className="size-4" />
               {item.label}
             </span>
           ))}
-          <span className="flex items-center gap-2.5 rounded-lg bg-sidebar-accent px-3 py-2 text-sm font-medium text-sidebar-accent-foreground">
+           <span className="flex items-center gap-2.5 rounded-md bg-sidebar-accent px-3 py-2 text-sm font-medium text-sidebar-accent-foreground">
             <CreditCard className="size-4 text-primary" />
             SaaS Admin
           </span>
         </nav>
-        <div className="mt-auto rounded-xl border border-sidebar-border bg-surface-muted/40 p-3">
+         <div className="mt-auto rounded-md border border-sidebar-border bg-sidebar-accent p-3">
           <p className="label-caps">Платформа</p>
           <p className="mt-1 text-sm">
             {stats.paying} из {stats.total} организаций с активной оплатой
@@ -180,9 +181,9 @@ function SaasAdminPage() {
         </div>
       </aside>
 
-      <main className="min-w-0 flex-1">
-        <header className="flex flex-wrap items-center gap-3 border-b border-border px-6 py-4">
-          <div className="relative min-w-56 flex-1">
+       <main className="min-w-0 flex-1 pb-20 lg:pb-0">
+         <header className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 border-b border-border bg-card px-4 py-3 sm:gap-3 lg:px-6">
+           <div className="relative min-w-0 max-w-2xl">
             <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               value={query}
@@ -191,7 +192,8 @@ function SaasAdminPage() {
               className="pl-9"
             />
           </div>
-          <div className="flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-sm">
+           <Button size="icon" variant="ghost" aria-label="Уведомления"><Bell /></Button>
+           <div className="hidden items-center gap-2 rounded-full border border-border px-3 py-1.5 text-sm sm:flex">
             <span className="grid size-6 place-items-center rounded-full bg-primary/15 text-xs text-primary">
               П
             </span>
@@ -199,15 +201,14 @@ function SaasAdminPage() {
           </div>
         </header>
 
-        <div className="space-y-6 px-6 py-6">
-          <div>
-            <p className="label-caps">Платформа</p>
-            <h1 className="mt-1 text-3xl font-semibold">SaaS Admin</h1>
-            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-              Статус организации, состояние подписки и срок доступа — три независимых слоя. Продление
-              доступа не требует переключения статусов, каждое действие фиксируется в журнале с
-              автором и причиной.
-            </p>
+         <div className="mx-auto max-w-[1500px] space-y-5 px-4 py-5 lg:px-6 lg:py-6">
+           <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3">
+             <div className="min-w-0">
+               <p className="label-caps">Платформа</p>
+               <h1 className="mt-1 truncate text-2xl font-semibold sm:text-3xl">SaaS Admin</h1>
+               <p className="mt-1 text-sm text-muted-foreground">Управление организациями, оплатой и доступом</p>
+             </div>
+             <Button variant="outline" size="icon" aria-label="Настройки списка"><SlidersHorizontal /></Button>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -217,26 +218,28 @@ function SaasAdminPage() {
             <Metric label="Ограничен доступ" value={String(stats.blocked)} icon={ShieldCheck} tone="danger" />
           </div>
 
-          <div className="flex flex-wrap gap-2">
+           <div className="flex gap-2 overflow-x-auto pb-1">
             {FILTERS.map((f) => (
-              <button
+               <Button
                 key={f.id}
                 type="button"
                 onClick={() => setFilter(f.id)}
-                className={cn(
-                  "rounded-full border px-3.5 py-1.5 text-sm transition-colors",
+                 variant="outline"
+                 size="sm"
+                 className={cn(
+                   "shrink-0 rounded-full",
                   filter === f.id
                     ? "border-primary/60 bg-primary/12 text-primary"
                     : "border-border text-muted-foreground hover:bg-accent",
                 )}
               >
                 {f.label}
-              </button>
+               </Button>
             ))}
           </div>
 
-          <div className="panel overflow-hidden">
-            <div className="hidden grid-cols-[1.4fr_0.8fr_1fr_1fr_0.7fr_auto] gap-4 border-b border-border px-5 py-3 lg:grid">
+           <div className="panel overflow-hidden">
+             <div className="hidden grid-cols-[1.35fr_0.65fr_0.9fr_0.9fr_0.7fr_auto] gap-3 border-b border-border bg-surface-muted/55 px-4 py-2.5 lg:grid">
               {["Организация", "План", "Подписка", "Доступ до", "Активность", ""].map((h, i) => (
                 <span key={i} className="label-caps">
                   {h}
@@ -246,23 +249,21 @@ function SaasAdminPage() {
             {rows.length === 0 && (
               <p className="p-6 text-sm text-muted-foreground">Ничего не найдено.</p>
             )}
-            {rows.map(({ org, access }) => (
+             <div className="hidden lg:block">
+             {rows.map(({ org, access }) => (
               <div
                 key={org.id}
-                className="grid gap-3 border-b border-border/70 px-5 py-4 last:border-0 hover:bg-accent/40 lg:grid-cols-[1.4fr_0.8fr_1fr_1fr_0.7fr_auto] lg:items-center lg:gap-4"
+                 className="grid grid-cols-[1.35fr_0.65fr_0.9fr_0.9fr_0.7fr_auto] items-center gap-3 border-b border-border/70 px-4 py-3 last:border-0 hover:bg-accent/45"
               >
                 <div>
                   <p className="font-medium">{org.name}</p>
                   <p className="font-mono text-xs text-muted-foreground">{org.slug}</p>
                   <p className="mt-0.5 text-xs text-muted-foreground">{org.ownerEmail}</p>
-                  <div className="mt-2 lg:hidden">
-                    <OrgStatusPill status={org.status} />
-                  </div>
                 </div>
                 <div className="text-sm">{planName(org.subscription.plan)}</div>
                 <div className="flex flex-col items-start gap-1.5">
                   <SubStatusPill status={org.subscription.status} />
-                  <div className="hidden items-center gap-1.5 lg:flex">
+                   <div className="flex items-center gap-1.5">
                     <span className="label-caps">Орг.</span>
                     <OrgStatusPill status={org.status} />
                   </div>
@@ -286,20 +287,51 @@ function SaasAdminPage() {
                   </Button>
                 </div>
               </div>
-            ))}
+             ))}
+             </div>
+
+             <div className="divide-y divide-border lg:hidden">
+               {rows.map(({ org, access }) => (
+                 <article key={org.id} className="p-4">
+                   <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+                     <div className="min-w-0">
+                       <p className="truncate font-semibold">{org.name}</p>
+                       <p className="truncate font-mono text-xs text-muted-foreground">{org.slug} · {org.ownerEmail}</p>
+                     </div>
+                     <OrgStatusPill status={org.status} />
+                   </div>
+                   <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3 border-y border-border/70 py-3 text-sm">
+                     <div><p className="label-caps">План</p><p className="mt-1 font-medium">{planName(org.subscription.plan)}</p></div>
+                     <div><p className="label-caps">Подписка</p><div className="mt-1"><SubStatusPill status={org.subscription.status} /></div></div>
+                     <div><p className="label-caps">Доступ до</p><p className="mt-1 font-mono">{fmtDate(access.accessUntil)}</p></div>
+                     <div><p className="label-caps">Доступ</p><div className="mt-1"><AccessPill access={access} /></div></div>
+                   </div>
+                   <p className="mt-3 text-xs text-muted-foreground">{org.records.toLocaleString("ru-RU")} записей{access.isOverride ? " · льготный доступ" : ""}</p>
+                   <div className="mt-3 grid grid-cols-2 gap-2">
+                     <Button variant="secondary" onClick={() => setQuickExtendId(org.id)}><CalendarClock />Продлить</Button>
+                     <Button onClick={() => setSelectedId(org.id)}>Управление<ChevronRight /></Button>
+                   </div>
+                 </article>
+               ))}
+             </div>
           </div>
 
           <section className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Журнал административных действий</h2>
-              <span className="text-xs text-muted-foreground">
-                actor · action · old → new · reason · source
-              </span>
+             <div>
+               <h2 className="text-lg font-semibold">Журнал административных действий</h2>
+               <p className="mt-1 text-sm text-muted-foreground">Каждая запись привязана к конкретному клиенту и его ID</p>
             </div>
-            <AuditTimeline entries={audit.slice(0, 8)} />
+             <AuditTimeline entries={audit.slice(0, 12)} organizations={organizations} showToolbar />
           </section>
         </div>
       </main>
+
+       <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-sidebar-border bg-sidebar px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 lg:hidden" aria-label="Основная навигация">
+         {[NAV[0], NAV[1], NAV[3]].map((item) => item && (
+           <Button key={item.label} variant="ghost" className="h-12 flex-col gap-1 text-[10px] text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"><item.icon className="size-4" />{item.label}</Button>
+         ))}
+         <Button variant="ghost" className="h-12 flex-col gap-1 bg-sidebar-accent text-[10px] text-sidebar-accent-foreground"><CreditCard className="size-4 text-primary" />SaaS Admin</Button>
+       </nav>
 
       <OrgDetail
         org={selected}
